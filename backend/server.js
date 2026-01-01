@@ -10,6 +10,14 @@ const app = express()
 // middleware
 app.use(express.json())
 
+// CORS middleware - Add this before routes
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  next()
+})
+
 app.use((req, res, next) => {
   console.log(req.path, req.method)
   next()
@@ -29,4 +37,4 @@ mongoose.connect(process.env.MONGO_URI)
   })
   .catch((err) => {
     console.log(err)
-  }) 
+  })
